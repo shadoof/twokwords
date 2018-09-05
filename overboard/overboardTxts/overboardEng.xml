@@ -1,0 +1,75 @@
+<origtext>
+	<verse>
+		<line>in many of these storms </line>
+		<line>the winds were so fierce </line>
+		<line>and the seas so high </line>
+		<line>they could not bear a knot of sail </line>
+		<line>but were forced to hull for days </line>
+		<line> </line>
+	</verse>
+	<verse>
+		<line>and on one of them </line>
+		<line>in a mighty storm </line>
+		<line>a man came above board </line>
+		<line>and was thrown into the sea </line>
+		<line> </line>
+	</verse>
+	<verse>
+		<line>but he caught hold of the halyards </line>
+		<line>which hung over board </line>
+		<line>and held his hold </line>
+		<line>though he was many fathoms under water </line>
+		<line> </line>
+	</verse>
+	<verse>
+		<line>till he was hauled up </line>
+		<line>to the brim of the water </line>
+		<line>and into the ship </line>
+		<line>and his life was saved </line>
+		<line> </line>
+	</verse>
+</origtext>
+<repletters>
+	<a><r>e</r><f/></a>
+	<b><r>p</r><f/></b>
+	<c><r>s</r><f/></c>
+	<d><r>b</r><f/></d>
+	<e><r>a</r><f/></e>
+	<f><r>t</r><f/></f>
+	<g><r>q</r><f/></g>
+	<h><r>r</r><f/></h>
+	<i><r>j</r><f/></i>
+	<j><r>i</r><f/></j>
+	<k><r>c</r><f/></k>
+	<l><r>t</r><f/></l>
+	<m><r>w</r><f/></m>
+	<n><r>r</r><f/></n>
+	<o><r>u</r><f/></o>
+	<p><r>q</r><f/></p>
+	<q><r>p</r><f/></q>
+	<r><r>n</r><f/></r>
+	<s><r>c</r><f/></s>
+	<t><r>l</r><f/></t>
+	<u><r>o</r><f/></u>
+	<v><r>y</r><f/></v>
+	<w><r>v</r><f/></w>
+	<x><r>z</r><f/></x>
+	<y><r>v</r><f/></y>
+	<z><r>x</r><f/></z>
+</repletters>
+<states>
+	<s><v>1</v><v>1</v><v>1</v><v>1</v><t>3600</t></s>
+	<s><v>1</v><v>1</v><v>1</v><v>0</v><t>2700</t></s>
+	<s><v>0</v><v>1</v><v>1</v><v>1</v><t>2700</t></s>
+	<s><v>1</v><v>1</v><v>0</v><v>0</v><t>1800</t></s>
+	<s><v>0</v><v>0</v><v>1</v><v>1</v><t>1800</t></s>
+	<s><v>1</v><v>0</v><v>0</v><v>0</v><t>900</t></s>
+	<s><v>0</v><v>0</v><v>0</v><v>1</v><t>900</t></s>
+	<s><v>0</v><v>0</v><v>0</v><v>0</v><t>900</t></s>
+</states>
+<versemetrics>
+	<verse><state>1</state></verse>
+	<verse><state>1</state></verse>
+	<verse><state>1</state></verse>
+	<verse><state>1</state></verse>
+</versemetrics>
