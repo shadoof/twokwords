@@ -1,0 +1,49 @@
+<html>
+
+<head>
+	<title>Cuerpo abierto</title>
+	<style>
+	body {
+	}
+	
+	div {
+	font-family: Helvetica; 
+	font-size: 4.5vh; 
+	line-height: 15vw; 
+	color: white; 
+/* 	text-shadow: #b30000 0 0 9vh;  */
+	text-shadow: red 0 0 6vh; 
+	text-align: justify; 
+	position: absolute; 
+	left: 9vw; 
+	right: 9vw; 
+	top: -9vh; 
+	}
+	
+	.paredes {
+	position: fixed; 
+	width: 9vw; 
+	}
+	
+	.selectas {
+	position: fixed; 
+	width: 9vw; 
+	}
+	
+	.selectas:active {
+	border-left: red 9vw solid; 
+	}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="cuerpoabierto.js"></script>
+</head>
+
+	<body>
+
+	<div class=cuerpo id=cuerpoDIV></div>
+	<img class=paredes src="paredes/one.jpg"></img>
+	<img class=selectas src="paredes/two.jpg"></img>
+	</body>
+
+</html>
