@@ -1,0 +1,1 @@
+words = open("name.txt")
