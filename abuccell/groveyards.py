@@ -1,4 +1,3 @@
-
 ### SET UP ###
 
 import re
@@ -21,22 +20,25 @@ class index:
         self.start = start
         self.end = end
 
-words = re.compile('[^a-zA-Z\s.\']').sub('',open("deathrow.txt","r").read()).replace('\n',"")
+GRID_Y = 50
+GRID_X = 200
 
+words = re.compile('[^a-zA-Z\s.\']').sub('',open("deathrow.txt","r").read()).replace('\n',"")
 wordHolder = [[[z for z in y.split(" ") if z!= ''] for y in x.split(".")] for x in words.split("QQ")]
-letterGrid = [[" " for z in range(200)] for x in range(20)]
-letterGridNext = [[" " for z in range(200)] for x in range(20)]
+
+letterGrid = [[" " for z in range(GRID_X)] for x in range(GRID_Y)]
+letterGridNext = [[" " for z in range(GRID_X)] for x in range(GRID_Y)]
 
 ### FUNCTIONS ##
 
 def makeGrid(i):
     text = wordHolder[i]
-    lineOffset = int((20 - len(text))/2)
+    lineOffset = 0 #int((GRID_Y - len(text))/2)
     for lineIndex,line in enumerate(text):
         lineSize = -1
         for word in line:
             lineSize+=len(word)+1
-        wordOffset = int((200 - (lineSize))/2)
+        wordOffset = 0 #int((GRID_X - (lineSize))/2)
         for word in line:
             for letter in word:
                 letterGrid[lineOffset+lineIndex][wordOffset] = letter
@@ -45,22 +47,22 @@ def makeGrid(i):
             wordOffset+=1
 
 def checkNext(line,x,direction,type):
-    if x>=0 or x<200:
-        if (letterGrid[line][x]==" " and type==" ") or (letterGrid[line][x]!=" " and type!= " "):
+    if x>=0 and x<GRID_X:
+        if (letterGrid[line][x]==" ") == (type ==" "):
             return x+1 if direction==-1 else x
     return checkNext(line,x+direction,direction,type)
 
 def haveNeighbor(index,direction):
     neighbors = set()
-    if direction == DIR.RIGHT or direction == DIR.LEFT:
+    if direction in (DIR.RIGHT,DIR.LEFT):
         flip = index.end+2 if direction == DIR.RIGHT else index.start-2
-        if (flip>=0 and flip<200):
+        if (flip>=0 and flip<GRID_X):
             if letterGrid[index.line][flip]!=" ":
                 neighbors.add(''.join(letterGrid[index.line][checkNext(index.line,flip,-1," "):checkNext(index.line,flip,1," ")]))
     else:
         flip = -1 if direction ==  DIR.UP else 1
         letterIndex = index.start
-        if (index.line+flip>=0 and index.line+flip<20):
+        if (index.line+flip>=0 and index.line+flip<GRID_Y):
             for letter in letterGrid[index.line+flip][index.start:index.end]:
                 neighbors.add(''.join(letterGrid[index.line+flip][checkNext(index.line+flip,letterIndex,-1," "):checkNext(index.line+flip,letterIndex,1," ")]))
                 letterIndex +=1
@@ -74,75 +76,31 @@ def getNeighbors(index):
         neighbors.remove('')
     return neighbors
 
-def reaper(line,start,end,state):
-    if state == STATE.STAY:
-        for index in range(start,end):
-            letterGridNext[line][index] = letterGrid[line][index]
+def reaper(index,state):
+    for digit in range(index.start,index.end):
+        letterGridNext[index.line][digit] =("t",letter[index.line][digit]," ")[state] #LIVE,STAY,DIE
 
-    if state == STATE.DIE:
-        for index in range(start,end):
-            letterGridNext[line][index] = " "
-
-    if state == STATE.LIVE:
-        for index in range(start,end):
-            letterGridNext[line][index] = "t"
-
-def evaluate(line,start,end,alive):
-    neighbors = getNeighbors(index(line,start,end))
-    word = ''.join(letterGrid[line][start:end])
-
+def evaluate(index,alive):
+    neighbors = getNeighbors(index)
     if alive:
-        '''tally = 0
-        for neighbor in neighbors:
-            if len(neighbor)>len(word):
-                tally+=1
-        if tally>int(len(neighbors)/2):
-            reaper(line,start,end,STATE.DIE)
-        else:
-            reaper(line,start,end,STATE.STAY)'''
-        if len(neighbors)<2 or len(neighbors)>3:
-            reaper(line,start,end,STATE.DIE)
-        else:
-            reaper(line,start,end,STATE.STAY)
-
+        state =  STATE.DIE if len(neighbors)<2 or len(neighbors)>3 else STATE.STAY
     else:
-        '''if (len(neighbors)>=2):
-            size = 0
-            equal = True
-            for neighbor in neighbors:
-                if size == 0:
-                    size = len(neighbor)
-                else:
-                    equal = equal and size == len(neighbor)
-            if equal:
-                reaper(line,start,end,STATE.LIVE)
-            else:
-                reaper(line,start,end,STATE.DIE)
-        else:
-            reaper(line,start,end,STATE.STAY)'''
-        if len(neighbors)==3:
-            reaper(line,start,end,STATE.LIVE)
-        else:
-            reaper(line,start,end,STATE.STAY)
-
+        state = STATE.LIVE if len(neighbors)==3 else STATE.LIVE
+    reaper(index,STATE.STAY)
 
 def cycle(letterGrid):
     for lineIndex,line in enumerate(letterGrid):
-        flag = False
         start = 0
         for letterIndex, letter in enumerate(line):
-            if flag == False:
-                if letter == ' ' and (letterIndex+1>=200 or letterGrid[lineIndex][letterIndex+1]== ' '):
-                    evaluate(lineIndex,letterIndex,letterIndex+1,False)
+            if start == 0:
+                if letter == ' ' and (letterIndex+1>=GRID_X or letterGrid[lineIndex][letterIndex+1]== ' '):
+                    evaluate(index(lineIndex,letterIndex,letterIndex+1),False)
                 elif letter != ' ':
                     start = letterIndex
-                    flag = True
-                else:
-                    reaper(lineIndex,lineIndex,lineIndex+1,STATE.STAY)
             else:
                 if letter == ' ':
-                    evaluate(lineIndex,start,letterIndex,True)
-                    flag = False
+                    evaluate(index(lineIndex,start,letterIndex),True)
+                    start = 0
     return letterGridNext
 
 def printGrid():
